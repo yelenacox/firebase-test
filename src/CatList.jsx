@@ -19,13 +19,13 @@ function CatList() {
   const { db } = useContext(myContext);
 
   const [data, setData] = useState([]);
-  const [newCat, setNewCat] = useState({
+  const blankCat = {
     name: "",
     age: 0,
     evil: "",
-    // colors: [],
-  });
-  const [colors, setColors] = useState([]);
+    colors: [""],
+  };
+  const [newCat, setNewCat] = useState(blankCat);
   useEffect(() => {
     querySnapshot();
   }, []);
@@ -39,14 +39,15 @@ function CatList() {
   };
 
   const handleColorAdd = () => {
-    let color = "";
-    setColors([...colors, color]);
+    setNewCat({ ...newCat, colors: [...newCat.colors, ""] });
   };
 
   const handleAdd = async (evt) => {
     evt.preventDefault();
+    console.log(newCat);
     await addDoc(collection(db, "Cats"), newCat);
-    // ,{ name: newCat?.name, age: newCat?.age, evil: newCat?.evil };
+    querySnapshot();
+    setNewCat(blankCat);
   };
 
   return (
@@ -156,31 +157,29 @@ function CatList() {
             }}
           />
         </div>
-        {/* {colors?.map((newColor) => (
+        {newCat.colors?.map((_, index) => (
           <div className="url form_wrapper">
             <label className="input_label" htmlFor="table_url">
               Colors
             </label>
             <input
               required
-              id="evil"
+              id={index}
               className="add_term_input url_input"
               type="text"
-              value={newColor}
+              value={newCat.colors[index]}
               onChange={(evt) => {
-                setColors({
-                  ...colors,
-                  colors: evt.target.value,
-                });
+                const updatedColors = newCat.colors;
+                updatedColors[index] = evt.target.value;
+                setNewCat({ ...newCat, colors: updatedColors });
               }}
             />
           </div>
         ))}
-        
+
         <button className="manage_term_button" onClick={handleColorAdd}>
-        Add Color
-      </button> */}
-        {console.log(newCat)}
+          Add Color
+        </button>
         <button onClick={handleAdd}>Save </button>
       </div>
     </>
