@@ -182,6 +182,8 @@ function CatList() {
         </button>
         <button onClick={handleAdd}>Save </button>
       </div>
+
+      <Link to={`/upload_file`}>CSV</Link>
     </>
   );
 }

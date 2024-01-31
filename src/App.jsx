@@ -7,6 +7,7 @@ import { createContext } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { CatDetail } from "./CatDetail";
+import { Upload } from "./Upload";
 
 export const myContext = createContext();
 function App() {
@@ -32,7 +33,8 @@ function App() {
     >
       <Routes>
         <Route index element={<CatList />} />
-        <Route path={"/cat/:catId"} element={<CatDetail />} />)
+        <Route path={"/cat/:catId"} element={<CatDetail />} />
+        <Route path={"/upload_file"} element={<Upload />} />
       </Routes>
     </myContext.Provider>
   );
